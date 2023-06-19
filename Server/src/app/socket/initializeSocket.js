@@ -11,13 +11,18 @@ const events = {
   },
 };
 
+// const activeUsers = {};
+const activeUsers = new Map();
+
 const handleConnect = (socket) => {
-  console.log(`${socket.id} connected`);
+  const name = socket.handshake.query.name;
+  activeUsers.set(name, socket.id);
+  // activeUsers[name] = socket.id;
   socket.broadcast.emit(events.emit.STATUS_ONLINE, {
     id: socket.id,
   });
   baseListeners(socket);
-  chatListeners(socket);
+  chatListeners(socket, activeUsers);
 };
 
 const initializeSocket = (server) => {
