@@ -1,9 +1,12 @@
 require("dotenv").config();
 const initializeSocket = require("./src/app/socket/initializeSocket");
 const express = require("express");
+const connectDB = require("./src/config/dbConfig");
 const app = express();
 const server = require("http").createServer(app);
 const port = process.env.PORT || 3000;
+
+connectDB();
 
 initializeSocket(server);
 
