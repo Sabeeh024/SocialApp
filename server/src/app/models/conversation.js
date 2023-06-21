@@ -9,11 +9,11 @@ const conversationSchema = new mongoose.Schema({
   ],
   messages: [
     {
-      sender: {
+      from: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      receiver: {
+      to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },

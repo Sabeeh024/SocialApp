@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -12,8 +12,17 @@ const userSchema = new mongoose.Schema({
   },
   friends: [
     {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      conversation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Conversation",
+      },
+    },
+  ],
+  friendRequests: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "FriendRequest",
     },
   ],
   conversations: [
