@@ -17,9 +17,7 @@ const getFriends = async (req, res, next) => {
       "friends.user",
       "username profileImage"
     );
-    for (const friend of user.friends) {
-      console.log(friend.user);
-    }
+    res.json({ friends: user.friends });
   } catch (error) {
     next(error);
   }

@@ -4,6 +4,7 @@ const express = require("express");
 const connectDB = require("./src/config/dbConfig");
 const authRouter = require("./src/app/routes/authRoutes");
 const friendRouter = require("./src/app/routes/friendRoutes");
+const chatRouter = require("./src/app/routes/chatRoutes");
 
 const app = express();
 const server = require("http").createServer(app);
@@ -13,6 +14,7 @@ const routes = {
   AUTH: "/auth",
   USER: "/user",
   FRIEND: "/user/friend",
+  CHAT: "/user/chat",
 };
 
 app.use(express.json());
@@ -21,6 +23,7 @@ connectDB();
 
 app.use(routes.AUTH, authRouter);
 app.use(routes.FRIEND, friendRouter);
+app.use(routes.CHAT, chatRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

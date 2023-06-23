@@ -9,32 +9,23 @@ const conversationSchema = new mongoose.Schema({
   ],
   messages: [
     {
-      from: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      to: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      //   receiver: {
-      //     type: mongoose.Schema.Types.ObjectId,
-      //     refPath: 'receiverModel'
-      //   },
-      //   receiverModel: {
-      //     type: String,
-      //     enum: ['User', 'Group']
-      //   },
-      content: {
-        type: String,
-        required: true,
-      },
-      timestamp: {
-        type: Date,
-        default: Date.now,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
     },
   ],
+  active: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+conversationSchema.pre("save", function (next) {
+  if (this.messages.length > 0) {
+    this.active = true;
+  } else {
+    this.active = false;
+  }
+  next();
 });
 
 const Conversation = mongoose.model("Conversation", conversationSchema);
