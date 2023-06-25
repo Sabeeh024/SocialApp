@@ -5,7 +5,7 @@ const connectDB = require("./src/config/dbConfig");
 const authRouter = require("./src/app/routes/authRoutes");
 const friendRouter = require("./src/app/routes/friendRoutes");
 const chatRouter = require("./src/app/routes/chatRoutes");
-
+const cors = require("cors");
 const app = express();
 const server = require("http").createServer(app);
 const port = process.env.PORT || 3000;
@@ -17,6 +17,7 @@ const routes = {
   CHAT: "/user/chat",
 };
 
+app.use(cors());
 app.use(express.json());
 
 connectDB();

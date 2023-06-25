@@ -1,6 +1,7 @@
 const configureSocket = require("../../config/socketConfig");
 const baseListeners = require("./baseListeners");
 const chatListeners = require("./chatListeners");
+const { activeUsers } = require("./socketData");
 
 const events = {
   listen: {
@@ -11,18 +12,14 @@ const events = {
   },
 };
 
-// const activeUsers = {};
-const activeUsers = new Map();
-
 const handleConnect = (socket) => {
-  const name = socket.handshake.query.name;
-  activeUsers.set(name, socket.id);
-  // activeUsers[name] = socket.id;
+  const user = JSON.parse(socket.handshake.query.user);
+  activeUsers.set(socket.id, user);
   socket.broadcast.emit(events.emit.STATUS_ONLINE, {
     id: socket.id,
   });
   baseListeners(socket);
-  chatListeners(socket, activeUsers);
+  chatListeners(socket);
 };
 
 const initializeSocket = (server) => {
